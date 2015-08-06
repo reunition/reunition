@@ -3,6 +3,8 @@ from .base import *
 
 DEBUG = False
 
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
+
 # IMPORTANT!:
 # You must keep this secret, you can store it in an
 # environment variable and set it with:
