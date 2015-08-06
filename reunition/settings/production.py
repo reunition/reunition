@@ -31,6 +31,7 @@ COMPRESS_PRECOMPILERS = (
 STATICFILES_FINDERS = STATICFILES_FINDERS + (
     'compressor.finders.CompressorFinder',
 )
+COMPRESS_OFFLINE = True
 
 try:
     from local_settings import *
