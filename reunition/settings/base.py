@@ -3,8 +3,6 @@ Project main settings file. These settings are common to the project
 if you need to override something do it in local.pt
 """
 
-from sys import path
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -13,22 +11,16 @@ import os
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-path.append(BASE_DIR)
 
 # Path of the top level directory. This directory contains the django project, apps, libs, etc...
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-
-# Add apps and libs to the PROJECT_ROOT
-path.append(os.path.join(PROJECT_ROOT, "apps"))
-path.append(os.path.join(PROJECT_ROOT, "libs"))
-
 
 ## SITE SETTINGS
 # https://docs.djangoproject.com/en/1.8/ref/settings/#site-id
 SITE_ID = 1
 
 # https://docs.djangoproject.com/en/1.8/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ''
 
 # https://docs.djangoproject.com/en/1.8/ref/settings/#installed-apps
 INSTALLED_APPS = [
