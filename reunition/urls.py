@@ -13,7 +13,7 @@ sitemaps = {
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     # robots.txt
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
-)
+]
 
 if settings.DEBUG:
     # Add debug-toolbar
@@ -33,14 +33,16 @@ if settings.DEBUG:
         # Temporarily debugging a deployed environment; don't install debug toolbar.
         pass
     else:
-        urlpatterns += patterns('', url(r'^__debug__/', include(debug_toolbar.urls)))
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ]
 
         # Serve media files through Django.
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
         # Show error pages during development
-        urlpatterns += patterns('',
+        urlpatterns += [
             url(r'^403/$', 'django.views.defaults.permission_denied'),
             url(r'^404/$', 'django.views.defaults.page_not_found'),
             url(r'^500/$', 'django.views.defaults.server_error')
-        )
+        ]
