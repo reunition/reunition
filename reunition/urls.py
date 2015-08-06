@@ -27,15 +27,20 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     # Add debug-toolbar
-    import debug_toolbar
-    urlpatterns += patterns('', url(r'^__debug__/', include(debug_toolbar.urls)))
+    try:
+        import debug_toolbar
+    except ImportError:
+        # Temporarily debugging a deployed environment; don't install debug toolbar.
+        pass
+    else:
+        urlpatterns += patterns('', url(r'^__debug__/', include(debug_toolbar.urls)))
 
-    # Serve media files through Django.
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        # Serve media files through Django.
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    # Show error pages during development
-    urlpatterns += patterns('',
-        url(r'^403/$', 'django.views.defaults.permission_denied'),
-        url(r'^404/$', 'django.views.defaults.page_not_found'),
-        url(r'^500/$', 'django.views.defaults.server_error')
-    )
+        # Show error pages during development
+        urlpatterns += patterns('',
+            url(r'^403/$', 'django.views.defaults.permission_denied'),
+            url(r'^404/$', 'django.views.defaults.page_not_found'),
+            url(r'^500/$', 'django.views.defaults.server_error')
+        )
