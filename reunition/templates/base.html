@@ -10,14 +10,9 @@
 
     <title>{% block page_title %}My Site{% endblock %}</title>
 
-  {% if debug %}
-    <link rel="stylesheet/less" href="{% static 'less/app.less' %}">
-    <script type="text/javascript" src="{% static 'js/libs/less.min.js' %}"></script>
-  {% else %}
     {% compress css %}
-    <link rel="stylesheet" type="text/less" media="all" href="{% static 'less/app.less' %}">
+      <link rel="stylesheet" type="text/less" media="all" href="{% static 'less/app.less' %}">
     {% endcompress %}
-  {% endif %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

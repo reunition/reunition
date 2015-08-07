@@ -25,12 +25,6 @@ ADMINS = (
 MANAGERS = ADMINS
 
 ## DJANGO-COMPRESSOR SETTINGS
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-STATICFILES_FINDERS = STATICFILES_FINDERS + (
-    'compressor.finders.CompressorFinder',
-)
 COMPRESS_OFFLINE = True
 
 try:

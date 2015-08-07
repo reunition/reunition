@@ -165,3 +165,12 @@ LOGGING = {
 ## DATABASE SETTINGS
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = dict(default=dj_database_url.config())
+
+
+## DJANGO-COMPRESSOR SETTINGS
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+STATICFILES_FINDERS = STATICFILES_FINDERS + (
+    'compressor.finders.CompressorFinder',
+)
