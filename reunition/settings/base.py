@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'compressor',
     'django_extensions',
 
+    # Our apps
+    'reunition.apps.alumni',
+    'reunition.apps.events',
+    'reunition.apps.reunions',
+
 ]
 
 # https://docs.djangoproject.com/en/1.8/topics/auth/passwords/#using-bcrypt-with-django
