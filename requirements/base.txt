@@ -16,3 +16,6 @@ bcrypt==1.1.1
 
 # Kitchen sinks
 django-extensions==1.5.5
+
+# Data import
+django-csvimport==2.4

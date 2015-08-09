@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'compressor',
+    'csvimport.app.CSVImportConf',
     'django_extensions',
 
     # Our apps
