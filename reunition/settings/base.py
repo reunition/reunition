@@ -180,3 +180,23 @@ COMPRESS_PRECOMPILERS = (
 STATICFILES_FINDERS = STATICFILES_FINDERS + (
     'compressor.finders.CompressorFinder',
 )
+
+
+## ALLAUTH
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+INSTALLED_APPS += [
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+]
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+def ACCOUNT_USER_DISPLAY(user):
+    return user.email
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_SESSION_REMEMBER = True
