@@ -9,40 +9,61 @@
 
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
+  <div style="height:30px"></div>
 
-{% get_providers as socialaccount_providers %}
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in
-below:{% endblocktrans %}</p>
+  {% include 'account/privacy_notice.html' %}
 
-<div class="socialaccount_ballot">
+  {% get_providers as socialaccount_providers %}
+  {% if socialaccount_providers %}
+    <div class="socialaccount_ballot">
+      <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+    </div>
+    {% include "socialaccount/snippets/login_extra.html" %}
+  {% endif %}
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  <h3>{% trans "Don't use Facebook?" %}</h3>
+
+  <p>
+    {% blocktrans %}
+      Sign up using your email address. Log in if you already have an account.
+    {% endblocktrans %}
+  </p>
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active" role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">{% trans 'Sign up' %}</a></li>
+    <li role="presentation"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">{% trans 'Log in' %}</a></li>
   </ul>
 
-  <div class="login-or">{% trans 'or' %}</div>
+  <div class="tab-content" style="margin-top:30px">
+    <div role="tabpanel" class="tab-pane active" id="signup">
+      <form id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ signup_form|bootstrap }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="form-actions">
+        <button class="btn btn-primary" type="submit">{% trans "Sign Up" %}</button>
+        </div>
+      </form>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="login">
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+          <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
 
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% endif %}
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form|bootstrap }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <div class="form-actions">
-    <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
-    <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-
+        </div>
+      </form>
+    </div>
   </div>
-</form>
+
 
 {% endblock %}

@@ -1,0 +1,25 @@
+{% if messages %}
+  <div class="container">
+    <div class="col-xs-12">
+      {% for message in messages %}
+        {% if message.level >= DEFAULT_MESSAGE_LEVELS.INFO %}
+          <div class="
+            alert
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+              alert-danger
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+              alert-warning
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+              alert-success
+            {% else %}
+              alert-notice
+            {% endif %}
+          ">
+            <a class="close" data-dismiss="alert">&times;</a>
+            {{ message }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

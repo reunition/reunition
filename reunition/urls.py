@@ -7,6 +7,7 @@ from django.contrib import admin
 
 from django.views.generic.base import TemplateView
 
+import reunition.views
 import reunition.apps.reunions.views
 
 
@@ -22,6 +23,7 @@ urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Allauth
+    url(r'^accounts/login/$', reunition.views.login_signup_view, name='account_login'),
     url(r'^accounts/', include('allauth.urls')),
 
     # Reunions

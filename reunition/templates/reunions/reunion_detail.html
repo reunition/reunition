@@ -21,7 +21,7 @@
 
   {% url 'reunions:rsvp' pk=reunion.pk as rsvp_url %}
   {% if user.is_anonymous %}
-    <p><a class="btn btn-primary" href="{% url 'account_signup' %}?next={{ rsvp_url }}">Sign in and RSVP</a></p>
+    <p><a class="btn btn-primary" href="{% url 'account_login' %}?next={{ rsvp_url }}">Sign in and RSVP</a></p>
     <p>Sign in to let us know whether or not you'll be attending.</p>
     <p>(If you've already RSVP'd, sign in to view or change your details.)</p>
   {% else %}
