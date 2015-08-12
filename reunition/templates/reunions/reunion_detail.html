@@ -1,0 +1,33 @@
+{% extends 'reunions/base.html' %}
+
+{% block navbar_info_active %}active{% endblock %}
+
+{% block content %}
+
+  <h2>When and where?</h2>
+
+  {% if reunion.starts_on != reunion.ends_on %}
+    <p>{{ reunion.starts_on }} through {{ reunion.ends_on }}{% if reunion.city %}, in {{ reunion.city }}{% endif %}.</p>
+  {% else %}
+    <p>{{ reunion.starts_on }}{% if reunion.city %}, in {{ reunion.city }}{% endif %}.</p>
+  {% endif %}
+
+  <h2>What will we be doing?</h2>
+
+  <p>We are still planning specific events.</p>
+  <p>Be sure to RSVP, and we'll text or email you event details when they're ready!</p>
+
+  <h2>How can I RSVP?</h2>
+
+  {% url 'reunions:rsvp' pk=reunion.pk as rsvp_url %}
+  {% if user.is_anonymous %}
+    <p><a class="btn btn-primary" href="{% url 'account_signup' %}?next={{ rsvp_url }}">Sign in and RSVP</a></p>
+    <p>Sign in to let us know whether or not you'll be attending.</p>
+    <p>(If you've already RSVP'd, sign in to view or change your details.)</p>
+  {% else %}
+    <p><a class="btn btn-primary" href="{{ rsvp_url }}">View or change your RSVP</a></p>
+    <p>You're already signed in, so click the button above to view or change your details.</p>
+  {% endif %}
+  <p>No purchase is required to RSVP.</p>
+
+{% endblock %}

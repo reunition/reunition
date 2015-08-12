@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{{ reunion }}{% endblock %}
+
+{% block navbar_items %}
+  <li class="{% block navbar_info_active %}{% endblock %}"><a href="{% url 'reunions:detail' pk=reunion.pk %}">Reunion info</a></li>
+  <li class="{% block navbar_rsvp_active %}{% endblock %}"><a href="{% url 'reunions:rsvp' pk=reunion.pk %}">RSVP</a></li>
+{% endblock %}
+
+{% block container %}
+  <div class="little-hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>
+            {% block hero_title %}
+              <span>{{ reunion.graduating_class.school.name }}</span>
+              <span>Class of {{ reunion.graduating_class.year }}</span>
+              <span>{{ reunion.year }}-year reunion</span>
+            {% endblock %}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}

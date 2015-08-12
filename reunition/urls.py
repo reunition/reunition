@@ -7,6 +7,9 @@ from django.contrib import admin
 
 from django.views.generic.base import TemplateView
 
+import reunition.apps.reunions.views
+
+
 sitemaps = {
     # Fill me with sitemaps
 }
@@ -20,6 +23,10 @@ urlpatterns = [
 
     # Allauth
     url(r'^accounts/', include('allauth.urls')),
+
+    # Reunions
+    url(r'^$', reunition.apps.reunions.views.redirect_to_latest),
+    url(r'^reunions/', include('reunition.apps.reunions.urls', 'reunions', 'reunions')),
 
     # Sitemap
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),

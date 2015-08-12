@@ -133,7 +133,8 @@ TEMPLATES = [
                 'django.core.context_processors.i18n',
                 'django.core.context_processors.static',
                 'django.core.context_processors.tz',
-                'django.contrib.messages.context_processors.messages'
+                'django.contrib.messages.context_processors.messages',
+                'reunition.context_processors.site',
             ],
         },
     },

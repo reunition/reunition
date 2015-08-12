@@ -7,6 +7,7 @@ class GraduatingClass(models.Model):
     year = models.PositiveIntegerField()
 
     class Meta:
+        verbose_name_plural = 'Graduating Classes'
         unique_together = [
             ('school', 'year'),
         ]
@@ -22,6 +23,9 @@ class Person(models.Model):
     graduation_last_name = models.CharField(max_length=100)
     current_first_name = models.CharField(max_length=100, blank=True, null=True)
     current_last_name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'People'
 
     @property
     def display_name(self):
