@@ -8,8 +8,9 @@ django-compressor==1.5
 psycopg2==2.6
 dj-database-url==0.3.0
 
-# Admin styling
+# Styling
 django-flat-theme==0.9.3
+django-bootstrap-form==3.2
 
 # Bcrypt passwords
 bcrypt==1.1.1
