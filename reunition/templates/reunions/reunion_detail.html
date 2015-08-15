@@ -26,8 +26,8 @@
 
   {% with alumni=reunion.alumni_counts guests=reunion.guest_counts %}
     <p>
-      {{ alumni.all }} {{ alumni.all|length|pluralize:"alumnus has,alumni have" }} RSVP'd
-      ({{ alumni.yes }} {{ alumni.yes|length|pluralize:"is,are" }} going, {{ alumni.maybe }} may be going),
+      {{ alumni.all }} {{ alumni.all|pluralize:"alumnus has,alumni have" }} RSVP'd
+      ({{ alumni.yes }} {{ alumni.yes|pluralize:"is,are" }} going, {{ alumni.maybe }} may be going),
       along with {{ guests.all }} guests.
     </p>
   {% endwith %}
