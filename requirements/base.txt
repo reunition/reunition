@@ -11,6 +11,8 @@ dj-database-url==0.3.0
 # Styling
 django-flat-theme==0.9.3
 django-bootstrap-form==3.2
+django-markdown-deux==1.0.5
+markdown2==2.3.0
 
 # Bcrypt passwords
 bcrypt==1.1.1

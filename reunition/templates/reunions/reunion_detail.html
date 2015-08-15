@@ -1,8 +1,13 @@
 {% extends 'reunions/base.html' %}
+{% load markdown_deux_tags %}
 
 {% block navbar_info_active %}active{% endblock %}
 
 {% block content %}
+
+  {% if reunion.intro_text %}
+    {{ reunion.intro_text|markdown }}
+  {% endif %}
 
   <h2>When and where?</h2>
 

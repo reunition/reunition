@@ -13,6 +13,7 @@ class Reunion(models.Model):
     starts_on = models.DateField()
     ends_on = models.DateField()
     city = models.CharField(max_length=200, blank=True, null=True)
+    intro_text = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return u'{0.year}-year reunion of the {0.graduating_class}'.format(self)

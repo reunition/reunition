@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'compressor',
     'csvimport.app.CSVImportConf',
     'django_extensions',
+    'markdown_deux',
 
     # Our apps
     'reunition.apps.alumni',
