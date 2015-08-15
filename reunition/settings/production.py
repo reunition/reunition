@@ -27,6 +27,11 @@ MANAGERS = ADMINS
 ## DJANGO-COMPRESSOR SETTINGS
 COMPRESS_OFFLINE = True
 
+## EMAIL
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+
 try:
     from local_settings import *
 except ImportError:
