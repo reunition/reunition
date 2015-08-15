@@ -24,6 +24,14 @@
 
   <h2>How can I RSVP?</h2>
 
+  {% with alumni=reunion.alumni_counts guests=reunion.guest_counts %}
+    <p>
+      {{ alumni.all }} {{ alumni.all|length|pluralize:"alumnus has,alumni have" }} RSVP'd
+      ({{ alumni.yes }} {{ alumni.yes|length|pluralize:"is,are" }} going, {{ alumni.maybe }} may be going),
+      along with {{ guests.all }} guests.
+    </p>
+  {% endwith %}
+
   {% url 'reunions:rsvp' pk=reunion.pk as rsvp_url %}
   {% if user.is_anonymous %}
     <p><a class="btn btn-primary" href="{% url 'account_login' %}?next={{ rsvp_url }}">Sign in and RSVP</a></p>

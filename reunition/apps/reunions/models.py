@@ -21,6 +21,26 @@ class Reunion(models.Model):
     def get_absolute_url(self):
         return reverse('reunions:detail', kwargs=dict(pk=self.pk))
 
+    def alumni_counts(self):
+        all = RsvpAlumniAttendee.objects.filter(rsvp__reunion=self)
+        yes = all.filter(rsvp__attending='Y')
+        maybe = all.filter(rsvp__attending='M')
+        return dict(
+            all=all.count(),
+            yes=yes.count(),
+            maybe=maybe.count(),
+        )
+
+    def guest_counts(self):
+        all = RsvpGuestAttendee.objects.filter(rsvp__reunion=self)
+        yes = all.filter(rsvp__attending='Y')
+        maybe = all.filter(rsvp__attending='M')
+        return dict(
+            all=all.count(),
+            yes=yes.count(),
+            maybe=maybe.count(),
+        )
+
 
 class Rsvp(TimeStampedModel):
 
