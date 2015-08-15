@@ -1,0 +1,5 @@
+{% extends 'reunions/base_formonly.html' %}
+
+{% block content %}
+  {% include 'reunions/_rsvp_attendee_add_form.html' with urlname='reunions:rsvp_alumni_add' %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'reunions/base_formonly.html' %}
+
+{% block content %}
+  <h2>
+    Update current name for
+    {{ attendee.person.graduation_first_name }}
+    {{ attendee.person.graduation_last_name }}
+  </h2>
+  {% include 'reunions/_rsvp_attendee_edit_form.html' with urlname='reunions:rsvp_alumni_edit' %}
+{% endblock %}

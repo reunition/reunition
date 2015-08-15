@@ -4,6 +4,80 @@
 
 {% block navbar_rsvp_active %}active{% endblock %}
 
+{% block hero_title %}
+  <span>RSVP for your {{ reunion.year }}-year reunion</span>
+{% endblock %}
+
 {% block content %}
+
+  {% if initial_form %}
+    <p>To start, please provide some basic information:</p>
+    {% include 'reunions/_rsvp_initial_form.html' with form=initial_form %}
+    If you are bringing a spouse or other guest(s), including other alumni, you can provide details about them on the next page.
+  {% endif %}
+
+  {% if rsvp %}
+
+    {% if rsvp.attending != 'N' %}
+
+      <h2>Who {% if rsvp.attending == 'Y' %}will{% else %}might{% endif %} be attending?</h2>
+
+      <h3>Alumni</h3>
+
+      {% with rsvp.rsvpalumniattendee_set.all as attendees %}
+        {% url 'reunions:rsvp_alumni_add' pk=reunion.pk as alumni_add_url %}
+        {% if attendees %}
+          <ul>
+            {% for attendee in attendees %}
+              {% url 'reunions:rsvp_alumni_edit' pk=reunion.pk attendee_pk=attendee.pk as edit_url %}
+              {% url 'reunions:rsvp_alumni_remove' pk=reunion.pk attendee_pk=attendee.pk as remove_url %}
+              <li>
+                {{ attendee.person }}
+                <a class="btn btn-default btn-xs" href="{{ edit_url }}">Edit</a>
+                {% if attendees.count > 1 %}
+                  <a class="btn btn-default btn-xs" href="{{ remove_url }}">Remove</a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+          <p>{% if rsvp.attending == 'Y' %}Will you{% else %}Would you be{% endif %} traveling with someone else in the {{ reunion.graduating_class }}?</p>
+          <p><a href="{{ alumni_add_url }}" class="btn btn-primary">Add another alumni</a></p>
+        {% else %}
+          <p>Please add yourself to the RSVP.</p>
+          <p><a href="{{ alumni_add_url }}" class="btn btn-primary">Add yourself</a></p>
+        {% endif %}
+      {% endwith %}
+
+      <h3>Guests</h3>
+
+      {% with rsvp.rsvpguestattendee_set.all as attendees %}
+        {% url 'reunions:rsvp_guest_add' pk=reunion.pk as guest_add_url %}
+        {% if attendees %}
+          <ul>
+            {% for attendee in attendees %}
+              {% url 'reunions:rsvp_guest_edit' pk=reunion.pk attendee_pk=attendee.pk as edit_url %}
+              {% url 'reunions:rsvp_guest_remove' pk=reunion.pk attendee_pk=attendee.pk as remove_url %}
+              <li>
+                {{ attendee }}
+                <a class="btn btn-default btn-xs" href="{{ edit_url }}">Edit</a>
+                <a class="btn btn-default btn-xs" href="{{ remove_url }}">Remove</a>
+              </li>
+            {% endfor %}
+          </ul>
+          <p>{% if rsvp.attending == 'Y' %}Are you{% else %}Would you be{% endif %} bringing any more guests?</p>
+          <p><a href="{{ guest_add_url }}" class="btn btn-primary">Add another guest</a></p>
+        {% else %}
+          <p>{% if rsvp.attending == 'Y' %}Are you{% else %}Would you be{% endif %} bringing any guests?</p>
+          <p><a href="{{ guest_add_url }}" class="btn btn-primary">Add a guest</a></p>
+        {% endif %}
+      {% endwith %}
+
+      <h2>General information</h2>
+
+    {% endif %}
+
+    {% include 'reunions/_rsvp_update_form.html' with form=update_form %}
+
+  {% endif %}
 
 {% endblock %}

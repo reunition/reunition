@@ -16,6 +16,7 @@ django-bootstrap-form==3.2
 bcrypt==1.1.1
 
 # Kitchen sinks
+django-braces==1.8.1
 django-extensions==1.5.5
 
 # Data import

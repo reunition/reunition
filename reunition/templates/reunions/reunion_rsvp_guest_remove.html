@@ -1,0 +1,6 @@
+{% extends 'reunions/base_formonly.html' %}
+
+{% block content %}
+  <h2>Remove {{ attendee }} from RSVP?</h2>
+  {% include 'reunions/_rsvp_attendee_remove_form.html' with urlname='reunions:rsvp_guest_remove' %}
+{% endblock %}

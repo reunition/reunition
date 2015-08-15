@@ -13,6 +13,7 @@ class PersonAdmin(admin.ModelAdmin):
         'display_name',
         'graduation_last_name',
         'graduation_first_name',
+        'verified',
     ]
 
 

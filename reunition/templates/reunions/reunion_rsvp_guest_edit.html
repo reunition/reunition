@@ -1,0 +1,6 @@
+{% extends 'reunions/base_formonly.html' %}
+
+{% block content %}
+  <h2>Change details for {{ attendee }}</h2>
+  {% include 'reunions/_rsvp_attendee_edit_form.html' with urlname='reunions:rsvp_guest_edit' %}
+{% endblock %}

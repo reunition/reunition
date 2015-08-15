@@ -1,0 +1,10 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<form id="attending_form" method="post" action="{% url 'reunions:rsvp_update' pk=reunion.pk %}">
+  {% csrf_token %}
+  {{ form|bootstrap }}
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">{% trans "Save Changes" %}</button>
+  </div>
+</form>

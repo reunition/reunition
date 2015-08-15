@@ -1,0 +1,11 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<form id="add_form" method="post" action="{% url urlname pk=reunion.pk %}">
+  {% csrf_token %}
+  {{ form|bootstrap }}
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">{% trans "Add" %}</button>
+    <a class="btn btn-default" href="{% url 'reunions:rsvp' pk=reunion.pk %}">{% trans "Cancel" %}</a>
+  </div>
+</form>

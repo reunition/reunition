@@ -1,0 +1,10 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<form id="add_form" method="post" action="{% url urlname pk=reunion.pk attendee_pk=attendee.pk %}">
+  {% csrf_token %}
+  <div class="form-actions">
+    <button class="btn btn-danger" type="submit">{% trans "Remove" %}</button>
+    <a class="btn btn-default" href="{% url 'reunions:rsvp' pk=reunion.pk %}">{% trans "Cancel" %}</a>
+  </div>
+</form>
