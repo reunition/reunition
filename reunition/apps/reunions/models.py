@@ -21,28 +21,40 @@ class Reunion(models.Model):
     def get_absolute_url(self):
         return reverse('reunions:detail', kwargs=dict(pk=self.pk))
 
-    def alumni_counts(self):
-        all = RsvpAlumniAttendee.objects.filter(rsvp__reunion=self)
+    def _counts(self, qs):
+        all = qs
         yes = all.filter(rsvp__attending='Y')
         maybe = all.filter(rsvp__attending='M')
+        no = all.filter(rsvp__attending='N')
         return dict(
             all=all.count(),
             yes=yes.count(),
             maybe=maybe.count(),
+            no=no.count(),
         )
 
+    def alumni_counts(self):
+        return self._counts(RsvpAlumniAttendee.objects.filter(rsvp__reunion=self))
+
     def guest_counts(self):
-        all = RsvpGuestAttendee.objects.filter(rsvp__reunion=self)
-        yes = all.filter(rsvp__attending='Y')
-        maybe = all.filter(rsvp__attending='M')
-        return dict(
-            all=all.count(),
-            yes=yes.count(),
-            maybe=maybe.count(),
-        )
+        return self._counts(RsvpGuestAttendee.objects.filter(rsvp__reunion=self))
+
+
+class RsvpManager(models.Manager):
+
+    def yes(self):
+        return self.filter(attending='Y')
+
+    def maybe(self):
+        return self.filter(attending='M')
+
+    def no(self):
+        return self.filter(attending='N')
 
 
 class Rsvp(TimeStampedModel):
+
+    objects = RsvpManager()
 
     ATTENDING_CHOICES = [
         ('Y', 'Yes'),

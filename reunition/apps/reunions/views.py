@@ -1,12 +1,12 @@
 from datetime import date
 
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.forms import Form
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView
 
 from reunition.apps.alumni import models as alumni_m
 
@@ -34,6 +34,19 @@ class ReunionDetailView(DetailView):
 
 
 detail_view = ReunionDetailView.as_view()
+
+
+# ------------------------------------------
+
+
+class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView):
+
+    model = m.Reunion
+    context_object_name = 'reunion'
+    template_name_suffix = '_reports'
+
+
+reports_view =  ReunionReportsView.as_view()
 
 
 # ------------------------------------------

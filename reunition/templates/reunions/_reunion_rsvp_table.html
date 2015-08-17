@@ -1,0 +1,47 @@
+<table class="table table-striped table-bordered" style="font-size: small">
+
+  <thead>
+    <tr>
+      <th>Alumni</th>
+      <th>Guests</th>
+      <th>Current City</th>
+      <th>Contact method</th>
+      <th>Email</th>
+      <th>Phone</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for rsvp in rsvps %}
+      <tr>
+        <td>
+          <ul>
+            {% for attendee in rsvp.rsvpalumniattendee_set.all %}
+              <li>{{ attendee }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          <ul>
+            {% for attendee in rsvp.rsvpguestattendee_set.all %}
+              <li>{{ attendee }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          {{ rsvp.current_city }}
+        </td>
+        <td>
+          {{ rsvp.contact_method }}
+        </td>
+        <td>
+          <a href="mailto:{{ rsvp.created_by.email }}">{{ rsvp.created_by.email }}</a>
+        </td>
+        <td>
+          <a href="tel:+1{{ rsvp.phone }}">{{ rsvp.phone }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+
+</table>

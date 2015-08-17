@@ -1,0 +1,44 @@
+{% extends 'reunions/base_nohero.html' %}
+{% load markdown_deux_tags %}
+
+{% block navbar_reports_active %}active{% endblock %}
+
+{% block content %}
+
+  <h2>Stats</h2>
+
+  <h3>Alumni</h3>
+
+  {% with reunion.alumni_counts as alumni %}
+    <ul>
+      <li>Yes: {{ alumni.yes }}</li>
+      <li>Maybe: {{ alumni.maybe }}</li>
+      <li>No: {{ alumni.no }}</li>
+    </ul>
+  {% endwith %}
+
+  <h3>Guests</h3>
+
+  {% with reunion.guest_counts as guests %}
+    <ul>
+      <li>Yes: {{ guests.yes }}</li>
+      <li>Maybe: {{ guests.maybe }}</li>
+      <li>No: {{ guests.no }}</li>
+    </ul>
+  {% endwith %}
+
+  <hr>
+
+  <h2>Yes</h2>
+
+  {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.yes %}
+
+  <h2>Maybe</h2>
+
+  {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.maybe %}
+
+  <h2>No</h2>
+
+  {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.no %}
+
+{% endblock %}

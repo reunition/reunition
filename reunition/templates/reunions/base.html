@@ -5,6 +5,9 @@
 {% block navbar_items %}
   <li class="{% block navbar_info_active %}{% endblock %}"><a href="{% url 'reunions:detail' pk=reunion.pk %}">Reunion info</a></li>
   <li class="{% block navbar_rsvp_active %}{% endblock %}"><a href="{% url 'reunions:rsvp' pk=reunion.pk %}">RSVP</a></li>
+  {% if user.is_staff %}
+    <li class="{% block navbar_rsvp_reports %}{% endblock %}"><a href="{% url 'reunions:reports' pk=reunion.pk %}">Reports</a></li>
+  {% endif %}
 {% endblock %}
 
 {% block container %}

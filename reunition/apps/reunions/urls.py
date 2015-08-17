@@ -10,6 +10,11 @@ urlpatterns = [
         name='detail',
     ),
     url(
+        r'^(?P<pk>\d+)/reports/$',
+        view=views.reports_view,
+        name='reports',
+    ),
+    url(
         r'^(?P<pk>\d+)/rsvp/$',
         view=views.rsvp_view,
         name='rsvp',
