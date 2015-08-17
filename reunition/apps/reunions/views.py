@@ -45,6 +45,8 @@ class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView)
     context_object_name = 'reunion'
     template_name_suffix = '_reports'
 
+    raise_exception = True
+
 
 reports_view =  ReunionReportsView.as_view()
 
