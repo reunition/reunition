@@ -133,6 +133,7 @@ class RsvpAlumniAttendee(AbstractRsvpAttendee):
     person = models.ForeignKey('alumni.Person')
 
     class Meta:
+        ordering = ('person__graduation_first_name',)
         unique_together = [
             ('rsvp', 'person'),
         ]
@@ -152,6 +153,9 @@ class RsvpGuestAttendee(AbstractRsvpAttendee):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     relationship = models.CharField(max_length=1, blank=True, null=True, choices=RELATIONSHIP_CHOICES)
+
+    class Meta:
+        ordering = ('first_name',)
 
     def __unicode__(self):
         if self.last_name:
