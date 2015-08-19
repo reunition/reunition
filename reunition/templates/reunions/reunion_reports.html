@@ -5,7 +5,15 @@
 
 {% block content %}
 
-  <h2>Stats</h2>
+  <ul>
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="#rsvps">RSVPs</a></li>
+    <li><a href="#notyet">Not yet RSVP'd</a></li>
+  </ul>
+
+  <hr>
+
+  <h2 id="stats">Stats</h2>
 
   <h3>Alumni</h3>
 
@@ -29,16 +37,39 @@
 
   <hr>
 
-  <h2>Yes</h2>
+  <h2 id="rsvps">RSVPs</h2>
+
+  <h3>Yes</h3>
 
   {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.yes %}
 
-  <h2>Maybe</h2>
+  <h3>Maybe</h3>
 
   {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.maybe %}
 
-  <h2>No</h2>
+  <h3>No</h3>
 
   {% include 'reunions/_reunion_rsvp_table.html' with rsvps=reunion.rsvp_set.no %}
+
+  <hr>
+
+  <h2 id="notyet">Not yet RSVP'd</h2>
+
+  <table class="table table-striped table-bordered table-reports" style="font-size: small">
+    <thead>
+      <tr>
+        <th>Alumni</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for person in alumni_not_rsvpd %}
+        <tr>
+          <td>
+            {{ person.display_name }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock %}

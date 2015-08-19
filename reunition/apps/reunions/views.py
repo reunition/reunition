@@ -1,4 +1,5 @@
 from datetime import date
+from itertools import chain
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
@@ -46,6 +47,14 @@ class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView)
     template_name_suffix = '_reports'
 
     raise_exception = True
+
+    def get_context_data(self, **kwargs):
+        data = super(ReunionReportsView, self).get_context_data(**kwargs)
+        rsvps = self.object.rsvp_set.all()
+        attendee_sets = [rsvp.rsvpalumniattendee_set.all() for rsvp in rsvps]
+        alumni_rsvpd = [attendee.person for attendee in chain.from_iterable(attendee_sets)]
+        data['alumni_not_rsvpd'] = [person for person in alumni_m.Person.objects.all() if person not in alumni_rsvpd]
+        return data
 
 
 reports_view =  ReunionReportsView.as_view()
