@@ -77,6 +77,7 @@ class Rsvp(TimeStampedModel):
     phone = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
+        ordering = ('-created',)
         unique_together = [
             ('created_by', 'reunion'),
         ]
