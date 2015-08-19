@@ -54,6 +54,7 @@ class Person(TimeStampedModel):
     verified = models.DateTimeField(blank=True, null=True)
 
     class Meta:
+        ordering = ('graduation_last_name',)
         verbose_name_plural = 'People'
 
     @property
