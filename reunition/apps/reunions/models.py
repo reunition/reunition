@@ -15,6 +15,9 @@ class Reunion(models.Model):
     city = models.CharField(max_length=200, blank=True, null=True)
     intro_text = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ('-year',)
+
     def __unicode__(self):
         return u'{0.year}-year reunion of the {0.graduating_class}'.format(self)
 
@@ -77,7 +80,7 @@ class Rsvp(TimeStampedModel):
     phone = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('-reunion__year', '-created')
         unique_together = [
             ('created_by', 'reunion'),
         ]
@@ -134,7 +137,7 @@ class RsvpAlumniAttendee(AbstractRsvpAttendee):
     person = models.ForeignKey('alumni.Person')
 
     class Meta:
-        ordering = ('person__graduation_first_name',)
+        ordering = ('-rsvp__reunion__year', 'person__graduation_first_name')
         unique_together = [
             ('rsvp', 'person'),
         ]
@@ -156,7 +159,7 @@ class RsvpGuestAttendee(AbstractRsvpAttendee):
     relationship = models.CharField(max_length=1, blank=True, null=True, choices=RELATIONSHIP_CHOICES)
 
     class Meta:
-        ordering = ('first_name',)
+        ordering = ('-relationship', 'first_name')
 
     def __unicode__(self):
         if self.last_name:

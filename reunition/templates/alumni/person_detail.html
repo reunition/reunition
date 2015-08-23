@@ -1,0 +1,92 @@
+{% extends 'alumni/base.html' %}
+
+{% block page_title %}{{ person.display_name }}{% endblock %}
+
+{% block hero_title %}
+  {{ person.display_name }}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% if person.verified %}
+      <span class="label label-success">Verified</span>
+      This name was found in the list of graduates.
+    {% else %}
+      <span class="label label-warning">Unverified</span>
+      This name was not found in the list of graduates.
+    {% endif %}
+  </p>
+
+  <h2>Contact information</h2>
+
+  <ul>
+    {% if contact.method %}
+      <li>Prefers: <strong>{{ contact.method }}</strong></li>
+    {% endif %}
+    {% if contact.email %}
+      <li>Email: <strong><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></strong></li>
+    {% endif %}
+    {% if contact.phone %}
+      <li>
+        Phone:
+        <strong><a href="{% if contact.method == 'text' %}sms{% else %}tel{% endif %}:+1{{ contact.phone }}">{{ contact.phone }}</a></strong>
+      </li>
+    {% endif %}
+    {% if contact.city %}
+      <li>City: <strong>{{ contact.city }}</strong></li>
+    {% endif %}
+  </ul>
+
+  {# ----- #}
+
+  {% for reunion_info in reunions %}
+
+    <hr>
+
+    <h2>{{ reunion_info.reunion.year }}-year reunion</h2>
+
+    {% with attendee=reunion_info.attendee rsvp=reunion_info.attendee.rsvp %}
+      {% if rsvp %}
+        <h3>
+          RSVP:
+          {% if rsvp.attending == 'Y' %}
+            Attending.
+          {% elif rsvp.attending == 'M' %}
+            May be attending.
+          {% elif rsvp.attending == 'N' %}
+            Not attending.
+          {% endif %}
+        </h3>
+
+        <p>Last updated {{ rsvp.modified|timesince }} ago ({{ rsvp.modified }})</p>
+
+        <div class="row">
+          <div class="col-sm-6">
+            {% with attendees=attendee.rsvp.rsvpalumniattendee_set.all %}
+              <p>Alumni: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}</p>
+              <ul>
+                {% for other_attendee in attendees %}
+                  <li><a href="{{ other_attendee.person.get_absolute_url }}">{{ other_attendee }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endwith %}
+          </div>
+          <div class="col-sm-6">
+            {% with attendees=attendee.rsvp.rsvpguestattendee_set.all %}
+              <p>Guests: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}</p>
+              <ul>
+                {% for other_attendee in attendees %}
+                  <li>{{ other_attendee }}</li>
+                {% endfor %}
+              </ul>
+            {% endwith %}
+          </div>
+        </div>
+      {% else %}
+        <h3>(No RSVP received)</h3>
+      {% endif %}
+    {% endwith %}
+
+  {% endfor %}
+{% endblock %}

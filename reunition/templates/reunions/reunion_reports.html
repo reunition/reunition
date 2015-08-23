@@ -65,7 +65,7 @@
       {% for person in alumni_not_rsvpd %}
         <tr>
           <td>
-            {{ person.display_name }}
+            <a href="{{ person.get_absolute_url }}">{{ person.display_name }}</a>
           </td>
         </tr>
       {% endfor %}

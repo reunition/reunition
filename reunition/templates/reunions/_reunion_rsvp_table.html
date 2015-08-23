@@ -17,7 +17,7 @@
         <td>
           <ul>
             {% for attendee in rsvp.rsvpalumniattendee_set.all %}
-              <li>{{ attendee }}</li>
+              <li><a href="{{ attendee.person.get_absolute_url }}">{{ attendee }}</a></li>
             {% endfor %}
           </ul>
         </td>

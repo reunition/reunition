@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'^accounts/login/$', reunition.views.login_signup_view, name='account_login'),
     url(r'^accounts/', include('allauth.urls')),
 
+    # Alumni
+    url(r'^alumni/', include('reunition.apps.alumni.urls', 'alumni', 'alumni')),
+
     # Reunions
     url(r'^$', reunition.apps.reunions.views.redirect_to_latest),
     url(r'^reunions/', include('reunition.apps.reunions.urls', 'reunions', 'reunions')),

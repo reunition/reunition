@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
@@ -15,6 +16,12 @@ class GraduatingClass(models.Model):
 
     def __unicode__(self):
         return u'{0.school.name} class of {0.year}'.format(self)
+#
+#
+# class Note(TimeStampedModel):
+#
+#     created_by = models.ForeignKey('auth.User')
+#     person = models.ForeignKey('Person')
 
 
 class PersonManager(models.Manager):
@@ -52,6 +59,7 @@ class Person(TimeStampedModel):
     current_first_name = models.CharField(max_length=100, blank=True, null=True)
     current_last_name = models.CharField(max_length=100, blank=True, null=True)
     verified = models.DateTimeField(blank=True, null=True)
+    user = models.OneToOneField('auth.User', blank=True, null=True)
 
     class Meta:
         ordering = ('graduation_last_name',)
@@ -74,6 +82,9 @@ class Person(TimeStampedModel):
 
     def __unicode__(self):
         return self.display_name
+
+    def get_absolute_url(self):
+        return reverse('alumni:person_detail', kwargs=dict(pk=self.pk))
 
 
 class School(models.Model):
