@@ -28,8 +28,6 @@ class PersonDetailView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView):
                 phone=most_recent.rsvp.phone if most_recent else None,
                 email=most_recent.rsvp.created_by.email if most_recent else None,
             )
-        print data
-
         return data
 
 
