@@ -38,6 +38,7 @@ class PersonDetailView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView):
 
     model = m.Person
     context_object_name = 'person'
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         data = super(PersonDetailView, self).get_context_data(**kwargs)
