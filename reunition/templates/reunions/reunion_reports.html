@@ -55,21 +55,40 @@
 
   <h2 id="notyet">Not yet RSVP'd</h2>
 
-  <table class="table table-striped table-bordered table-reports" style="font-size: small">
-    <thead>
-      <tr>
-        <th>Alumni</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for person in alumni_not_rsvpd %}
-        <tr>
-          <td>
-            <a href="{{ person.get_absolute_url }}">{{ person.display_name }}</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h3>Not yet contacted</h3>
+
+  <ul>
+    {% for person in alumni_not_rsvpd %}
+      {% if person.note_set.count == 0 %}
+        <li>
+          <a href="{{ person.get_absolute_url }}">
+            {{ person.display_name }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <h3>Contacted (most recent at bottom)</h3>
+
+  <ul>
+    {% for note in notes %}
+      <li>
+        <a href="{{ note.person.get_absolute_url }}">
+          {{ note.person.display_name }}
+        </a>
+        &mdash;
+        {% with person=note.created_by.person %}
+          {% if person %}{{ person }}{% else %}{{ user }}{% endif %}
+          {% if note.contacted %}
+            {{ note.get_contacted_display.lower }}
+          {% else %}
+            left a note
+          {% endif %}
+          {{ note.created|timesince }} ago ({{ note.created }})
+        {% endwith %}
+      </li>
+    {% endfor %}
+  </ul>
 
 {% endblock %}

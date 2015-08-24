@@ -50,10 +50,21 @@ class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView)
 
     def get_context_data(self, **kwargs):
         data = super(ReunionReportsView, self).get_context_data(**kwargs)
+        # List of people who haven't RSVP'd.
         rsvps = self.object.rsvp_set.all()
-        attendee_sets = [rsvp.rsvpalumniattendee_set.all() for rsvp in rsvps]
-        alumni_rsvpd = [attendee.person for attendee in chain.from_iterable(attendee_sets)]
+        attendee_sets = [rsvp.rsvpalumniattendee_set.select_related('person').all() for rsvp in rsvps]
+        alumni_rsvpd = set(attendee.person for attendee in chain.from_iterable(attendee_sets))
         data['alumni_not_rsvpd'] = [person for person in alumni_m.Person.objects.all() if person not in alumni_rsvpd]
+        # List of most recent notes for people who have not RSVP'd, oldest to newest.
+        people_already_noted = set()
+        notes = []
+        all_notes = alumni_m.Note.objects.select_related('person').filter(person__graduating_class_id=self.object.graduating_class_id).order_by('-created_by')
+        for note in all_notes:
+            if note.person not in people_already_noted and note.person not in alumni_rsvpd:
+                notes.append(note)
+                people_already_noted.add(note.person)
+        notes.reverse()
+        data['notes'] = notes
         return data
 
 
