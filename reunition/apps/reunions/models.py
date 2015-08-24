@@ -121,7 +121,7 @@ class Rsvp(TimeStampedModel):
                 verified=None,
             )
         if person:
-            self.rsvpalumniattendee_set.create(person=person)
+            return self.rsvpalumniattendee_set.create(person=person)
 
 
 class AbstractRsvpAttendee(TimeStampedModel):

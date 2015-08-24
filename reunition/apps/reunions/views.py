@@ -183,13 +183,20 @@ class RsvpInitialFormView(LoginRequiredMixin, FormView):
                 contact_method=data['contact_method'],
                 phone=data['phone'],
             )
-            rsvp.add_alumni_attendee_by_name(
+            attendee = rsvp.add_alumni_attendee_by_name(
                 graduation_first_name=data['graduation_first_name'],
                 graduation_last_name=data['graduation_last_name'],
                 current_first_name=data['current_first_name'],
                 current_last_name=data['current_last_name'],
                 request=self.request,
             )
+            # Associate the alumni.person to the user.
+            try:
+                self.request.user.person
+            except alumni_m.Person.DoesNotExist:
+                person = attendee.person
+                person.user = self.request.user
+                person.save()
         return super(RsvpInitialFormView, self).form_valid(form)
 
 
