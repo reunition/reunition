@@ -23,13 +23,17 @@ class Note(TimeStampedModel):
     CONTACTED_CHOICES = [
         ('', 'No contact made'),
         ('', '---'),
-        ('incoming', 'This person contacted the alumni committee'),
-        ('', '---'),
         ('email', 'Sent email'),
-        ('facebook', 'Sent Facebook message or request'),
+        ('fb', 'Sent Facebook message'),
         ('phone', 'Made phone call'),
         ('text', 'Sent text message'),
         ('other', 'Made other contact'),
+        ('', '---'),
+        ('email-in', 'Received email'),
+        ('fb-in', 'Received Facebook message'),
+        ('phone-in', 'Received phone call'),
+        ('text-in', 'Received text message'),
+        ('other', 'Received other contact'),
     ]
 
     created_by = models.ForeignKey('auth.User')
