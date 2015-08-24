@@ -1,0 +1,10 @@
+{% extends 'alumni/base.html' %}
+
+{% block container %}
+  <div style="height:30px"></div>
+  {% include 'messages.html' %}
+  <div class="container" id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<form id="add_form" method="post" action="{% url 'alumni:note_add' pk=person.pk %}">
+  {% csrf_token %}
+  {{ form|bootstrap }}
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">{% trans "Add" %}</button>
+  </div>
+</form>

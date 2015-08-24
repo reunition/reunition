@@ -1,0 +1,16 @@
+<h2>Notes</h2>
+{% for note in person.note_set.all %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {% with person=user.person %}
+        {% if person %}{{ person }}{% else %}{{ user }}{% endif %},
+        {{ note.created|timesince }} ago ({{ note.created }})
+      {% endwith %}
+    </div>
+    <div class="panel-body">
+      {{ note.text|linebreaksbr }}
+    </div>
+  </div>
+{% endfor %}
+<h3>Add a note</h3>
+{% include 'alumni/_note_add_form.html' with form=note_add_form %}

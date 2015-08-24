@@ -16,12 +16,29 @@ class GraduatingClass(models.Model):
 
     def __unicode__(self):
         return u'{0.school.name} class of {0.year}'.format(self)
-#
-#
-# class Note(TimeStampedModel):
-#
-#     created_by = models.ForeignKey('auth.User')
-#     person = models.ForeignKey('Person')
+
+
+class Note(TimeStampedModel):
+
+    CONTACTED_CHOICES = [
+        ('', 'No contact made'),
+        ('', '---'),
+        ('incoming', 'This person contacted the alumni committee'),
+        ('', '---'),
+        ('email', 'Sent email'),
+        ('facebook', 'Sent Facebook message or request'),
+        ('phone', 'Made phone call'),
+        ('text', 'Sent text message'),
+        ('other', 'Made other contact'),
+    ]
+
+    created_by = models.ForeignKey('auth.User')
+    person = models.ForeignKey('Person')
+    contacted = models.CharField(max_length=10, blank=True, null=True, choices=CONTACTED_CHOICES)
+    text = models.TextField()
+
+    class Meta:
+        ordering = ('created_by',)
 
 
 class PersonManager(models.Manager):

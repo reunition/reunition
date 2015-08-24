@@ -40,53 +40,88 @@
 
   {# ----- #}
 
-  {% for reunion_info in reunions %}
+  {% if reunions %}
+    {% for reunion_info in reunions %}
 
-    <hr>
+      <hr>
 
-    <h2>{{ reunion_info.reunion.year }}-year reunion</h2>
+      <h2><a href="{% url 'reunions:reports' pk=reunion_info.reunion.pk %}">{{ reunion_info.reunion.year }}-year reunion</a></h2>
 
-    {% with attendee=reunion_info.attendee rsvp=reunion_info.attendee.rsvp %}
-      {% if rsvp %}
-        <h3>
-          RSVP:
-          {% if rsvp.attending == 'Y' %}
-            Attending.
-          {% elif rsvp.attending == 'M' %}
-            May be attending.
-          {% elif rsvp.attending == 'N' %}
-            Not attending.
-          {% endif %}
-        </h3>
+      {% with attendee=reunion_info.attendee rsvp=reunion_info.attendee.rsvp %}
+        {% if rsvp %}
+          <h3>
+            RSVP:
+            {% if rsvp.attending == 'Y' %}
+              Attending.
+            {% elif rsvp.attending == 'M' %}
+              May be attending.
+            {% elif rsvp.attending == 'N' %}
+              Not attending.
+            {% endif %}
+          </h3>
 
-        <p>Last updated {{ rsvp.modified|timesince }} ago ({{ rsvp.modified }})</p>
+          <p>Last updated {{ rsvp.modified|timesince }} ago ({{ rsvp.modified }})</p>
 
-        <div class="row">
-          <div class="col-sm-6">
-            {% with attendees=attendee.rsvp.rsvpalumniattendee_set.all %}
-              <p>Alumni: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}</p>
-              <ul>
-                {% for other_attendee in attendees %}
-                  <li><a href="{{ other_attendee.person.get_absolute_url }}">{{ other_attendee }}</a></li>
-                {% endfor %}
-              </ul>
-            {% endwith %}
+          <div class="row">
+            <div class="col-sm-6">
+              {% with attendees=attendee.rsvp.rsvpalumniattendee_set.all %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    Alumni: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}
+                  </div>
+                  <div class="panel-body">
+                    <ul>
+                      {% for other_attendee in attendees %}
+                        <li>
+                          {% if other_attendee == attendee %}
+                            {# Don't link back to same person. #}
+                            {{ other_attendee }}
+                          {% else %}
+                            <a href="{{ other_attendee.person.get_absolute_url }}">{{ other_attendee }}</a>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              {% endwith %}
+            </div>
+            <div class="col-sm-6">
+              {% with attendees=attendee.rsvp.rsvpguestattendee_set.all %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    Guests: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}
+                  </div>
+                  <div class="panel-body">
+                    <ul>
+                      {% for other_attendee in attendees %}
+                        <li>{{ other_attendee }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              {% endwith %}
+            </div>
           </div>
-          <div class="col-sm-6">
-            {% with attendees=attendee.rsvp.rsvpguestattendee_set.all %}
-              <p>Guests: {{ attendees.count }} {{ attendees.count|pluralize:"person,people" }}</p>
-              <ul>
-                {% for other_attendee in attendees %}
-                  <li>{{ other_attendee }}</li>
-                {% endfor %}
-              </ul>
-            {% endwith %}
-          </div>
-        </div>
-      {% else %}
-        <h3>(No RSVP received)</h3>
+        {% else %}
+          <h3>(No RSVP received)</h3>
+        {% endif %}
+      {% endwith %}
+
+      {# Show notes after most recent reunion's RSVP section. #}
+      {% if forloop.first %}
+        <hr>
+        {% include 'alumni/_person_detail_notes.html' %}
       {% endif %}
-    {% endwith %}
 
-  {% endfor %}
+    {% endfor %}
+
+  {% else %}
+
+    {# No reunions in system yet; just show notes. #}
+    <hr>
+    {% include 'alumni/_person_detail_notes.html' %}
+
+  {% endif %}
+
 {% endblock %}
