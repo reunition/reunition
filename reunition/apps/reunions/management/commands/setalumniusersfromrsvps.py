@@ -14,7 +14,7 @@ class Command(NoArgsCommand):
             user = rsvp.created_by
             try:
                 user.person
-            except alumni_m.Person.DoesNotExist, e:
+            except alumni_m.Person.DoesNotExist:
                 first_alumni_added = rsvp.rsvpalumniattendee_set.order_by('created').first()
                 if first_alumni_added:
                     person = first_alumni_added.person
