@@ -137,7 +137,7 @@ class RsvpAlumniAttendee(AbstractRsvpAttendee):
     person = models.ForeignKey('alumni.Person')
 
     class Meta:
-        ordering = ('-rsvp__reunion__year', 'person__graduation_first_name')
+        ordering = ('-rsvp__reunion__year', 'created')
         unique_together = [
             ('rsvp', 'person'),
         ]
