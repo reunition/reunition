@@ -58,7 +58,7 @@ class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView)
         # List of most recent notes for people who have not RSVP'd, oldest to newest.
         people_already_noted = set()
         notes = []
-        all_notes = alumni_m.Note.objects.select_related('person').filter(person__graduating_class_id=self.object.graduating_class_id).order_by('-created_by')
+        all_notes = alumni_m.Note.objects.select_related('person').filter(person__graduating_class_id=self.object.graduating_class_id).order_by('-created')
         for note in all_notes:
             if note.person not in people_already_noted and note.person not in alumni_rsvpd:
                 notes.append(note)
