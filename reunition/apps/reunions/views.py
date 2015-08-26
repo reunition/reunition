@@ -63,7 +63,6 @@ class ReunionReportsView(LoginRequiredMixin, StaffuserRequiredMixin, DetailView)
             if note.person not in people_already_noted and note.person not in alumni_rsvpd:
                 notes.append(note)
                 people_already_noted.add(note.person)
-        notes.reverse()
         data['notes'] = notes
         return data
 
